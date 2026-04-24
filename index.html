@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>贵财经旅行社 | 荔波小七孔</title>
+  <style>
+    :root {
+      --ink: #10352f;
+      --ink-soft: #2f5e55;
+      --jade: #157a6e;
+      --jade-deep: #0d5d54;
+      --mint: #e9f7f1;
+      --mist: #f8fcfa;
+      --gold: #c68c38;
+      --gold-soft: rgba(198, 140, 56, 0.16);
+      --line: rgba(16, 53, 47, 0.12);
+      --card: rgba(255, 255, 255, 0.86);
+      --shadow: 0 24px 60px rgba(12, 53, 48, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --wrap: min(1180px, calc(100vw - 40px));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "STSong", "Songti SC", "Noto Serif SC", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(21, 122, 110, 0.16), transparent 28%),
+        radial-gradient(circle at right 18%, rgba(198, 140, 56, 0.12), transparent 20%),
+        linear-gradient(180deg, #f4fbf8 0%, #ffffff 36%, #f8fcfb 100%);
+      text-wrap: pretty;
+    }
+
+    img,
+    iframe {
+      display: block;
+      max-width: 100%;
+      border: 0;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shell::before,
+    .shell::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(14px);
+      opacity: 0.45;
+    }
+
+    .shell::before {
+      width: 320px;
+      height: 320px;
+      top: 72px;
+      right: -120px;
+      background: rgba(21, 122, 110, 0.12);
+    }
+
+    .shell::after {
+      width: 260px;
+      height: 260px;
+      bottom: 140px;
+      left: -80px;
+      background: rgba(198, 140, 56, 0.10);
+    }
+
+    .topbar {
+      width: var(--wrap);
+      margin: 0 auto;
+      padding: 22px 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-badge {
+      width: 88px;
+      height: 88px;
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: linear-gradient(135deg, #0f6157 0%, #18887a 60%, #3ca89a 100%);
+      flex: none;
+    }
+
+    .brand-copy h1,
+    .brand-copy p,
+    .hero-copy h2,
+    .hero-copy p,
+    .section-tag,
+    .section-head h3,
+    .section-head p,
+    .panel h4,
+    .panel p,
+    .spotlight-card h4,
+    .spotlight-card p,
+    .story-card h4,
+    .story-card p,
+    .footer-copy p {
+      margin: 0;
+    }
+
+    .brand-copy h1 {
+      font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+      letter-spacing: 0.05em;
+    }
+
+    .brand-copy p {
+      color: var(--ink-soft);
+      margin-top: 6px;
+      font-size: 0.96rem;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--jade-deep);
+      font-size: 0.95rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      width: var(--wrap);
+      margin: 14px auto 32px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-visual {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-copy {
+      padding: clamp(28px, 4vw, 46px);
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(233, 247, 241, 0.92) 100%),
+        linear-gradient(120deg, rgba(21, 122, 110, 0.06), rgba(198, 140, 56, 0.05));
+      border: 1px solid rgba(21, 122, 110, 0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 560px;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(21, 122, 110, 0.08);
+      color: var(--jade-deep);
+      width: fit-content;
+      letter-spacing: 0.08em;
+      font-size: 0.88rem;
+    }
+
+    .hero-copy h2 {
+      margin-top: 18px;
+      font-size: clamp(2.5rem, 5vw, 4.6rem);
+      line-height: 1.06;
+    }
+
+    .hero-copy .lead {
+      margin-top: 18px;
+      font-size: 1.06rem;
+      line-height: 1.9;
+      color: var(--ink-soft);
+      max-width: 56ch;
+    }
+
+    .slogan-box {
+      margin-top: 24px;
+      padding: 20px 22px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.6));
+      border: 1px solid rgba(16, 53, 47, 0.08);
+    }
+
+    .slogan-box strong {
+      display: block;
+      font-size: 1.12rem;
+      color: var(--jade-deep);
+      margin-bottom: 10px;
+    }
+
+    .hero-facts {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .fact {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(16, 53, 47, 0.08);
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--jade-deep);
+    }
+
+    .fact span {
+      display: block;
+      margin-top: 8px;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .hero-cta {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-size: 0.98rem;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #fff;
+      background: linear-gradient(120deg, #0f6157 0%, #1d897c 100%);
+      box-shadow: 0 18px 36px rgba(21, 122, 110, 0.2);
+    }
+
+    .button-secondary {
+      border: 1px solid rgba(16, 53, 47, 0.12);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink);
+    }
+
+    .hero-visual {
+      min-height: 560px;
+      background:
+        linear-gradient(180deg, rgba(8, 39, 35, 0.08), rgba(8, 39, 35, 0.55)),
+        url("https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%275qKF5bGx5Y%2BW5pmv5ZywXzE3MzY4MDIyNjQuNTk0MjYyMQ%3D%3D%27/0.png") center/cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-overlay {
+      width: 100%;
+      padding: 28px;
+      color: #fffdf7;
+      background: linear-gradient(180deg, transparent, rgba(5, 28, 24, 0.72));
+    }
+
+    .hero-overlay strong {
+      display: block;
+      font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+      margin-bottom: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-overlay p {
+      margin: 0;
+      line-height: 1.8;
+      max-width: 34ch;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .content {
+      width: var(--wrap);
+      margin: 0 auto;
+      padding-bottom: 32px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 18px 0 18px;
+    }
+
+    .section-head h3 {
+      font-size: clamp(1.7rem, 2.5vw, 2.6rem);
+      margin-bottom: 6px;
+    }
+
+    .section-head p {
+      color: var(--ink-soft);
+      line-height: 1.8;
+      max-width: 52ch;
+    }
+
+    .overview-grid,
+    .spotlight-grid,
+    .gallery-grid,
+    .travel-grid,
+    .footer-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .overview-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .panel,
+    .spotlight-card,
+    .story-card,
+    .contact-card,
+    .video-card {
+      background: var(--card);
+      border: 1px solid rgba(16, 53, 47, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .panel h4,
+    .video-card h4,
+    .contact-card h4 {
+      font-size: 1.36rem;
+      margin-bottom: 14px;
+    }
+
+    .panel p,
+    .panel li,
+    .spotlight-card p,
+    .story-card p,
+    .video-card p,
+    .contact-card p {
+      color: var(--ink-soft);
+      line-height: 1.9;
+      font-size: 0.98rem;
+    }
+
+    .panel ul {
+      margin: 14px 0 0;
+      padding-left: 1.2em;
+    }
+
+    .story-card {
+      padding: 26px;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      background:
+        linear-gradient(180deg, rgba(21, 122, 110, 0.06), rgba(255, 255, 255, 0.86));
+    }
+
+    .story-card h4 {
+      font-size: 1.28rem;
+      margin: 0;
+      color: var(--jade-deep);
+    }
+
+    .quote-line {
+      padding: 16px 18px;
+      border-left: 4px solid var(--gold);
+      background: rgba(198, 140, 56, 0.08);
+      border-radius: 0 18px 18px 0;
+      color: var(--ink);
+      line-height: 1.9;
+    }
+
+    .spotlight-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .spotlight-card {
+      overflow: hidden;
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .spotlight-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 28px 56px rgba(12, 53, 48, 0.16);
+    }
+
+    .spotlight-card img {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .spotlight-body {
+      padding: 18px 18px 22px;
+    }
+
+    .spotlight-card h4 {
+      font-size: 1.18rem;
+      margin-bottom: 8px;
+    }
+
+    .gallery-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: stretch;
+      margin-top: 12px;
+    }
+
+    .video-card,
+    .contact-card {
+      padding: 24px;
+    }
+
+    .video-frame {
+      margin-top: 16px;
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 380px;
+      border: 1px solid rgba(16, 53, 47, 0.1);
+      background: #d9eee8;
+    }
+
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      background: #d9eee8;
+    }
+
+    .gallery-stack {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 186px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(16, 53, 47, 0.08);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.38s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 16px;
+      background: linear-gradient(180deg, transparent, rgba(6, 27, 24, 0.78));
+      color: #fff;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+    }
+
+    .travel-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .contact-card {
+      margin-top: 24px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(233, 247, 241, 0.96));
+    }
+
+    .contact-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .contact-chip {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(16, 53, 47, 0.08);
+    }
+
+    .contact-chip strong {
+      display: block;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--jade-deep);
+      margin-bottom: 8px;
+    }
+
+    .contact-chip span {
+      display: block;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+
+    .footer {
+      margin-top: 34px;
+      padding: 0 0 42px;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      background: linear-gradient(135deg, #114c45 0%, #176b61 60%, #1d8577 100%);
+      color: #f5f9f7;
+      border-radius: 34px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .footer-copy,
+    .footer-image {
+      padding: 32px;
+    }
+
+    .footer-copy h3 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    }
+
+    .footer-copy p {
+      color: rgba(245, 249, 247, 0.84);
+      line-height: 1.9;
+      margin-bottom: 14px;
+    }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      margin-top: 8px;
+    }
+
+    .footer-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: cover;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .gold {
+      color: #f6d39d;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .overview-grid,
+      .gallery-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spotlight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .travel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-copy,
+      .hero-visual {
+        min-height: auto;
+      }
+
+      .hero-facts,
+      .contact-list,
+      .spotlight-grid,
+      .gallery-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .logo-badge {
+        width: 76px;
+        height: 76px;
+      }
+
+      .hero-overlay {
+        padding: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="" aria-label="贵财经旅行社品牌标志" style="width: 120px; border-radius: 20px; overflow: hidden;">
+          <img src="https://i.postimg.cc/253499NV/6d503757d1c44e8e85c51f291028fb84.jpg" alt="" srcset="">
+        </div>
+        <div class="brand-copy">
+          <h1>贵财经旅行社</h1>
+          <p>以财智为翼，赴山海之约，以研学为径，悟知行之美</p>
+        </div>
+      </div>
+      <a class="nav-pill" href="#contact">联系电话：19989999999</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div>
+            <div class="section-tag">贵州山水旅行精选</div>
+            <h2>遇见荔波小七孔，<br>把山水装进一次有温度的旅行</h2>
+            <p class="lead">
+              荔波小七孔位于贵州荔波，以清代七孔古桥得名。这里把桥、瀑、潭、湖、林、洞巧妙串联在一条幽谷之中，既有喀斯特地貌的奇秀，也有自然研学的生动课堂，是兼具观赏性与学习价值的山水目的地。
+            </p>
+
+            <div class="slogan-box">
+              <strong>品牌 Logo 设计理念</strong>
+              标志以展翼的线条象征“财智为翼”，中部山形与桥拱呼应“小七孔”的山水与古桥，下方金色弧线寓意研学之路与远行之约，整体呈现知行合一、奔赴山海的旅行精神。
+            </div>
+
+            <div class="hero-facts">
+              <div class="fact">
+                <strong>桥</strong>
+                <span>七孔古桥横卧碧水之上，是景区最具辨识度的文化地标。</span>
+              </div>
+              <div class="fact">
+                <strong>瀑</strong>
+                <span>拉雅瀑布、六十八级跌水瀑布层层叠映，水声清润而灵动。</span>
+              </div>
+              <div class="fact">
+                <strong>林</strong>
+                <span>水上森林与原始植被交织，适合开展生态观察与自然研学。</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-cta">
+            <a class="button button-primary" href="#video">查看景区视频</a>
+            <a class="button button-secondary" href="#gallery">浏览风景图片</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-overlay">
+            <strong>贵州名片级山水秘境</strong>
+            <p>
+              翠谷、碧潭、飞瀑、古桥相映成景，让每一次驻足都像翻开一幅层层铺展的自然画卷。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="content">
+        <section>
+          <div class="section-head">
+            <div>
+              <h3>为什么选择荔波小七孔</h3>
+              <p>景区集山、水、洞、林、瀑、湖、石于一体，是贵州极具代表性的自然景观之一，也很适合制作研学旅行主题网页展示。</p>
+            </div>
+          </div>
+
+          <div class="overview-grid">
+            <article class="panel">
+              <h4>景区概览</h4>
+              <p>
+                荔波小七孔风景区以秀美、清润、灵秀著称，峡谷纵深、溪流蜿蜒，沿途既能看到古桥与瀑布交相辉映，也能感受喀斯特地貌塑造出的奇特地形。这里四季皆景，晴日水色澄澈，雨后云雾轻笼，极具层次感与观赏价值。
+              </p>
+              <p>
+                对于旅行社宣传而言，小七孔兼具自然美、文化美和研学价值。它不仅能满足游客对“山水贵州”的想象，也能让学生在旅行中观察生态环境、了解地貌成因、感受人与自然和谐共生的魅力。
+              </p>
+              <ul>
+                <li>适合自然风景观赏、摄影打卡和生态研学</li>
+                <li>景观类型丰富，一次出行即可体验桥、瀑、潭、林等多重风貌</li>
+                <li>画面层次鲜明，适合进行图文记录、旅行分享与风景展示</li>
+              </ul>
+            </article>
+
+            <aside class="story-card">
+              <h4>研学旅行推荐语</h4>
+              <div class="quote-line">
+                从古桥读历史，从飞瀑观地貌，从森林悟生态。荔波小七孔不是一段匆匆而过的旅途，而是一堂在山水之间展开的生动课程。
+              </div>
+              <p>
+                贵财经旅行社希望把每一次出发都变成一次“见天地、见山水、见自己”的学习体验，让风景不止停留在眼前，更沉淀成理解世界的方式。
+              </p>
+            </aside>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h3>核心风景亮点</h3>
+              <p>以下景观是荔波小七孔最具代表性的名片，也是网页展示中最能体现景区气质的内容。</p>
+            </div>
+          </div>
+
+          <div class="spotlight-grid">
+            <article class="spotlight-card">
+              <img src="https://img0.baidu.com/it/u=2142279625,3087982918&fm=253&fmt=auto&app=138&f=JPEG?w=1422&h=800" alt="荔波小七孔古桥与山水">
+              <div class="spotlight-body">
+                <h4>小七孔古桥</h4>
+                <p>古桥横卧碧波之上，是景区名字的来源，也是荔波最具文化辨识度的经典画面。</p>
+              </div>
+            </article>
+
+            <article class="spotlight-card">
+              <img src="https://img0.baidu.com/it/u=3884550015,2012455637&fm=253&app=138&f=JPEG?w=1422&h=800" alt="拉雅瀑布景观">
+              <div class="spotlight-body">
+                <h4>拉雅瀑布</h4>
+                <p>飞瀑近桥而下，水声清越，既有灵气也有冲击力，是游客最喜欢驻足拍照的点位之一。</p>
+              </div>
+            </article>
+
+            <article class="spotlight-card">
+              <img src="https://img2.baidu.com/it/u=1038417522,799376024&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=800" alt="水上森林风光">
+              <div class="spotlight-body">
+                <h4>水上森林</h4>
+                <p>树木根系与溪流共生，形成独特而清凉的步行体验，非常适合生态观察与自然研学。</p>
+              </div>
+            </article>
+
+            <article class="spotlight-card">
+              <img src="https://img.meituan.net/leadinimg/1ba80dabccaea7127fc83518b6fec61a188942.webp%40watermark%3D0" alt="卧龙潭碧水景色">
+              <div class="spotlight-body">
+                <h4>卧龙潭碧水</h4>
+                <p>潭水颜色澄净通透，静中见秀，是荔波小七孔最具“贵州蓝绿”气质的一幅风景画。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="video">
+          <div class="section-head">
+            <div>
+              <h3>视频与风景画廊</h3>
+              <p>页面同时保留了视频展示和图片欣赏，让内容表达更完整，也更方便直观感受荔波小七孔的山水魅力。</p>
+            </div>
+          </div>
+
+          <div class="gallery-grid">
+            <article class="video-card">
+              <h4>景区视频</h4>
+              <p>
+                下方嵌入的是你提供的贵州官方页面视频入口，用来展示荔波小七孔的动态风景。如果浏览器拦截了嵌入内容，也可以点击链接跳转观看。
+              </p>
+              <div class="video-frame">
+                <iframe
+                  src="https://www.guizhou.gov.cn/mas/openapi/pages.do?method=exPlay&appKey=gov&id=319363"
+                  title="荔波小七孔景区视频"
+                  loading="lazy"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="hero-cta">
+                <a class="button button-primary" href="https://www.guizhou.gov.cn/mas/openapi/pages.do?method=exPlay&appKey=gov&id=319363" target="_blank" rel="noreferrer">打开官方视频页面</a>
+              </div>
+            </article>
+
+            <div class="gallery-stack" id="gallery">
+              <figure class="gallery-item">
+                <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%275qKF5bGx5Y%2BW5pmv5ZywXzE3MzY4MDIyNjQuNTk0MjYyMQ%3D%3D%27/0.png" alt="荔波小七孔主视觉风景">
+                <figcaption class="gallery-caption">山谷碧水，层峦倒映</figcaption>
+              </figure>
+
+              <figure class="gallery-item">
+                <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%27LV8xNzMyNTMzODc4LjY2MzcwNTZfMTczMjUzMzg3OS4zODgwMjAz%27/1.png" alt="荔波小七孔清幽景色">
+                <figcaption class="gallery-caption">清润幽谷，步步皆景</figcaption>
+              </figure>
+
+              <figure class="gallery-item">
+                <img src="https://img0.baidu.com/it/u=2142279625,3087982918&fm=253&fmt=auto&app=138&f=JPEG?w=1422&h=800" alt="古桥与山水">
+                <figcaption class="gallery-caption">古桥映水，文化与自然相融</figcaption>
+              </figure>
+
+              <figure class="gallery-item">
+                <img src="https://img.meituan.net/leadinimg/1ba80dabccaea7127fc83518b6fec61a188942.webp%40watermark%3D0" alt="卧龙潭风景">
+                <figcaption class="gallery-caption">碧潭如镜，水色空灵</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h3>推荐游览思路</h3>
+              <p>如果把这次出行理解为一场“边走边学”的旅行，那么下面的路线更容易兼顾看景、拍照与研学观察。</p>
+            </div>
+          </div>
+
+          <div class="travel-grid">
+            <article class="panel">
+              <h4>第一站：观桥识史</h4>
+              <p>
+                先从小七孔古桥切入，了解景区名称来源与地方历史记忆，适合作为网页介绍的开篇内容，也方便串联后面的自然景观。
+              </p>
+            </article>
+
+            <article class="panel">
+              <h4>第二站：观瀑察地貌</h4>
+              <p>
+                继续前往拉雅瀑布、跌水瀑布等区域，观察流水如何塑造地形，感受喀斯特山水的动态之美，是自然地理观察的重要部分。
+              </p>
+            </article>
+
+            <article class="panel">
+              <h4>第三站：入林悟生态</h4>
+              <p>
+                在水上森林与碧潭区域体验植被、水系和气候之间的关系，把一次旅行延伸为对生态环境的真实感知。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="contact-card" id="contact">
+          <h4>贵财经旅行社联系方式</h4>
+          <p>
+            以财智为翼，赴山海之约；以研学为径，悟知行之美。欢迎关注贵财经旅行社荔波小七孔研学旅行线路，感受贵州山水的灵秀与厚重。
+          </p>
+          <div class="contact-list">
+            <div class="contact-chip">
+              <strong>联系电话</strong>
+              <span>19989999999</span>
+            </div>
+            <div class="contact-chip">
+              <strong>联系地址</strong>
+              <span>贵财经旅行社</span>
+            </div>
+            <div class="contact-chip">
+              <strong>主题定位</strong>
+              <span>荔波小七孔研学旅行网页展示</span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div class="footer-grid">
+            <div class="footer-copy">
+              <h3>贵财经旅行社<span class="gold"> · 荔波小七孔</span></h3>
+              <p>
+                页面围绕荔波小七孔展开品牌展示、图文介绍、风景图片、视频入口与联系方式等内容，呈现一份更完整的贵州山水旅行宣传体验。
+              </p>
+              <div class="footer-badge">以财智为翼，赴山海之约</div>
+            </div>
+            <div class="footer-image">
+              <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%27LV8xNzMyNTMzODc4LjY2MzcwNTZfMTczMjUzMzg3OS4zODgwMjAz%27/1.png" alt="荔波小七孔尾图">
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
